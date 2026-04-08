@@ -2,12 +2,15 @@ import Card from '../Cards/Card';
 import CardHeader from '../Cards/CardHeader';
 import CardBody from '../Cards/CardBody';
 import CardFooter from '../Cards/CardFooter';
+import { useNavigate } from 'react-router';
 
 const PokemonCard = (
     {
         data
     }
 )=>{
+    const redirectTo = useNavigate();
+
     const getStat = (statName) => (
       data?.stats?.find((item) => item?.stat?.name === statName)?.base_stat ?? '-'
     );
@@ -103,7 +106,10 @@ const PokemonCard = (
                 cardFooter={(
                   <CardFooter>
                     <section className="flex">
-                      <button className="flex-1 mx-4 mt-8 mb-2 px-4 py-3 bg-green-600 text-white font-bold rounded-sm">Detalles</button>
+                      <button
+                        className="flex-1 mx-4 mt-8 mb-2 px-4 py-3 bg-green-600 text-white font-bold rounded-sm"
+                        onClick={()=>{redirectTo(`/pokemon/${data?.id}`)}}
+                      >Detalles</button>
                     </section>
                   </CardFooter>
                 )}

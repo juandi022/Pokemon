@@ -1,14 +1,16 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 const NAV_LINKS = [
-    { label: 'Catálogo' },
-    { label: 'Mi Colección' },
-    { label: 'Acerca de Nosotros' },
+    { label: 'Catálogo', path:"/" },
+    { label: 'Mi Colección', path:"/collection" },
+    { label: 'Acerca de Nosotros', path:"/about" },
 ];
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-
+    const redirectTo = useNavigate();
+    
     return (
         <header className="bg-indigo-700 text-white shadow-md">
             <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
@@ -20,9 +22,12 @@ const Header = () => {
 
                 <nav className="hidden md:block">
                     <ul className="flex items-center gap-1">
-                        {NAV_LINKS.map(({ label }) => (
+                        {NAV_LINKS.map(({ label, path }) => (
                             <li key={label}>
-                                <button className="px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-600 hover:text-white transition-colors cursor-pointer">
+                                <button
+                                    className="px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-600 hover:text-white transition-colors cursor-pointer"
+                                    onClick={()=>{redirectTo(path)}}
+                                >
                                     {label}
                                 </button>
                             </li>
@@ -45,11 +50,11 @@ const Header = () => {
             <div className={`md:hidden overflow-hidden transition-all duration-300 ${menuOpen ? 'max-h-60' : 'max-h-0'}`}>
                 <nav className="bg-indigo-800 px-4 pb-3">
                     <ul className="flex flex-col gap-1 pt-2">
-                        {NAV_LINKS.map(({ label }) => (
+                        {NAV_LINKS.map(({ label, path }) => (
                             <li key={label}>
                                 <button
                                     className="w-full text-left px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-600 transition-colors cursor-pointer"
-                                    onClick={() => setMenuOpen(false)}
+                                    onClick={()=>{redirectTo(path)}}
                                 >
                                     {label}
                                 </button>
