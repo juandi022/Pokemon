@@ -3,6 +3,7 @@ class PokemonService {
         this.pokelist = [];
         this.fetchedIds = [];
         this.flatlist = {};
+        console.log("Constructor being called")
     }
 
     FetchList(page=1, limit=20, onFetchHandler) {
@@ -25,7 +26,6 @@ class PokemonService {
                     Promise.allSettled(idsFetching).then( (allResponse)=> {
                         console.log("All Response", allResponse);
                         allResponse.forEach(({status, value})=>{
-                            console.log(value);
                             if (status=="fulfilled"){
                                 this.flatlist[value?.id] = value
                                 this.fetchedIds.push(value?.id);
@@ -52,7 +52,14 @@ class PokemonService {
     ExtractId(url){
         let urlParts = (url ?? '').split('/');
         let pokemonId = urlParts[urlParts.length - 2];
-        return pokemonId;
+        return Number(pokemonId);
+    }
+    GetPokemonById(id){
+        console.log(this.fetchedIds);
+        if(this.fetchedIds.includes(Number(id))) {
+            return this.flatlist[id];
+        }
+        return {};
     }
 
 }

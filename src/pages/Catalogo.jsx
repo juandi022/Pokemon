@@ -1,9 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
 import CardGrid from '../components/Cards/CardGrid';
 import PokemonCard from '../components/Pokemon/PokemonCard';
-import PokemonService from '../services/PokemonAPI';
 import Paginator from '../components/Paginator/Paginator';
 import Loader from '../components/Loaders/Loader';
+import { usePokemonService } from '../context/Context';
 
 
 const Catalogo = () => {
@@ -15,9 +15,7 @@ const Catalogo = () => {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(20);
     const [totalItems, setTotalItems] = useState(0);
-    const PokemonServiceInstance = useMemo(() => {
-        return new PokemonService();
-    }, [isLoaded]);
+    const PokemonServiceInstance = usePokemonService();
     useEffect(
         () => {
             if (PokemonServiceInstance) {
