@@ -27,8 +27,9 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: '24'
+
       - name: Instalar las Dependencias del Proyecto
-        run: npm install
+        run: npm install --legacy-peer-deps
       - name: Compilar la página para distribución
         run: npm run build
       - name: Asegurar el 404 fallback
